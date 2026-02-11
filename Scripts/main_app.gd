@@ -7,7 +7,7 @@ extends Control
 
 # --- CONFIGURACIÓN ---
 var menu_abierto = true  # Empezamos asumiendo que está abierto porque así lo tienes en el editor
-var ancho_menu = 291     # Ajusta esto al ancho que le diste a tu zona gris
+var ancho_menu =  300    # Ajusta esto al ancho que le diste a tu zona gris
 var tiempo_animacion = 0.3
 
 func _ready():
