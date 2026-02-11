@@ -1,9 +1,34 @@
-[gd_scene format=3 uid="uid://dc8ee3hlid8d5"]
+[gd_scene format=3 uid="uid://b8iles1ehld0x"]
 
-[node name="Control" type="Control" unique_id=1599099931]
+[ext_resource type="Script" uid="uid://jg3pb5imbrqg" path="res://search_scene.gd" id="1_i12f2"]
+
+[node name="Search" type="Control" unique_id=1599099931]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_i12f2")
+
+[node name="PrincipalLayout" type="VBoxContainer" parent="." unique_id=1945085420]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LineEdit" type="LineEdit" parent="PrincipalLayout" unique_id=2072762319]
+layout_mode = 2
+placeholder_text = "Search..."
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PrincipalLayout" unique_id=1056462115]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Results" type="VBoxContainer" parent="PrincipalLayout/ScrollContainer" unique_id=875219581]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="BookAPI" type="HTTPRequest" parent="." unique_id=848861124]

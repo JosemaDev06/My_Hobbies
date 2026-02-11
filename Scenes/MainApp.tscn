@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://djx1ank7e5tm4"]
 
-[ext_resource type="Script" path="res://main_app.gd" id="1_q8jyx"]
-[ext_resource type="Texture2D" path="res://search.png" id="2_oy3xc"]
-[ext_resource type="Texture2D" path="res://books.png" id="3_6xhhc"]
-[ext_resource type="Texture2D" path="res://Games.png" id="4_561kl"]
-[ext_resource type="Texture2D" path="res://Series.png" id="5_jduf5"]
-[ext_resource type="Texture2D" path="res://Films.png" id="6_7qji7"]
-[ext_resource type="Texture2D" path="res://Social.png" id="7_na8jn"]
-[ext_resource type="Texture2D" path="res://profile.png" id="8_iu3bl"]
-[ext_resource type="Texture2D" path="res://hamburguer.png" id="9_561kl"]
+[ext_resource type="Script" path="res://main_app.gd" id="1_cl7kx"]
+[ext_resource type="Texture2D" path="res://search.png" id="2_myy55"]
+[ext_resource type="Texture2D" path="res://books.png" id="3_2fwo1"]
+[ext_resource type="Texture2D" path="res://Games.png" id="4_4132t"]
+[ext_resource type="Texture2D" path="res://Series.png" id="5_ii6w7"]
+[ext_resource type="Texture2D" path="res://Films.png" id="6_nhwc3"]
+[ext_resource type="Texture2D" path="res://Social.png" id="7_r7dwu"]
+[ext_resource type="Texture2D" path="res://profile.png" id="8_n7axu"]
+[ext_resource type="Texture2D" path="res://hamburguer.png" id="9_v0ent"]
 
 [node name="Main" type="Control" unique_id=1200556173]
 layout_mode = 3
@@ -17,7 +17,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_q8jyx")
+script = ExtResource("1_cl7kx")
 
 [node name="BackGroundColor" type="ColorRect" parent="." unique_id=363418273]
 layout_mode = 0
@@ -57,44 +57,44 @@ theme_override_constants/separation = 35
 layout_mode = 2
 theme_override_constants/icon_max_width = 30
 text = "Search"
-icon = ExtResource("2_oy3xc")
+icon = ExtResource("2_myy55")
 
 [node name="Books" type="Button" parent="SideMenu/MenuColor/ButtonContainer/VBoxContainer" unique_id=1606267422]
 layout_mode = 2
 theme_override_constants/icon_max_width = 30
 text = "Books
 "
-icon = ExtResource("3_6xhhc")
+icon = ExtResource("3_2fwo1")
 
 [node name="Games" type="Button" parent="SideMenu/MenuColor/ButtonContainer/VBoxContainer" unique_id=435816582]
 layout_mode = 2
 theme_override_constants/icon_max_width = 30
 text = "Games"
-icon = ExtResource("4_561kl")
+icon = ExtResource("4_4132t")
 
 [node name="Series" type="Button" parent="SideMenu/MenuColor/ButtonContainer/VBoxContainer" unique_id=1116327487]
 layout_mode = 2
 theme_override_constants/icon_max_width = 30
 text = "Series"
-icon = ExtResource("5_jduf5")
+icon = ExtResource("5_ii6w7")
 
 [node name="Films" type="Button" parent="SideMenu/MenuColor/ButtonContainer/VBoxContainer" unique_id=954329832]
 layout_mode = 2
 theme_override_constants/icon_max_width = 30
 text = "Films"
-icon = ExtResource("6_7qji7")
+icon = ExtResource("6_nhwc3")
 
 [node name="Social" type="Button" parent="SideMenu/MenuColor/ButtonContainer/VBoxContainer" unique_id=389034007]
 layout_mode = 2
 theme_override_constants/icon_max_width = 30
 text = "Social"
-icon = ExtResource("7_na8jn")
+icon = ExtResource("7_r7dwu")
 
 [node name="Profile" type="Button" parent="SideMenu/MenuColor/ButtonContainer/VBoxContainer" unique_id=1213749291]
 layout_mode = 2
 theme_override_constants/icon_max_width = 30
 text = "Profile"
-icon = ExtResource("8_iu3bl")
+icon = ExtResource("8_n7axu")
 
 [node name="Menu" type="Button" parent="." unique_id=451335143]
 layout_mode = 1
@@ -103,6 +103,6 @@ offset_top = 23.0
 offset_right = 66.0
 offset_bottom = 68.0
 theme_override_constants/icon_max_width = 40
-icon = ExtResource("9_561kl")
+icon = ExtResource("9_v0ent")
 
 [connection signal="pressed" from="Menu" to="." method="_on_hamburguesa_pressed"]
