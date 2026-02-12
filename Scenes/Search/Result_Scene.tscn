@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ovmn0wj1odtp"]
 
-[ext_resource type="Script" uid="uid://buwbysbwwt3wk" path="res://Scenes/Search/result_scene.gd" id="1_o7qp3"]
+[ext_resource type="Script" uid="uid://buwbysbwwt3wk" path="res://Scripts/result_scene.gd" id="1_o7qp3"]
 [ext_resource type="Texture2D" uid="uid://cupnhyv34rr0u" path="res://Scenes/Main/images/Games.png" id="1_rvxan"]
 
 [node name="MarginContainer" type="MarginContainer" unique_id=471733402]
@@ -32,5 +32,3 @@ modulate = Color(0.6623437, 0.685792, 0.16786367, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "★★★★★"
-
-[node name="ImageRequest" type="HTTPRequest" parent="." unique_id=1356745818]
