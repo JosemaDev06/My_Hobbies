@@ -20,7 +20,7 @@ func _ready():
 	menu_sidebar.custom_minimum_size.x = ancho_menu
 	menu_sidebar.clip_contents = true 
 	
-	btn_hamburguesa.pressed.connect(_on_hamburguesa_pressed)
+	
 	
 	# Si el botón de búsqueda está dentro del SideMenu, lo conectamos:
 	var btn_search = menu_sidebar.find_child("Sear") # Ajusta el nombre si es distinto

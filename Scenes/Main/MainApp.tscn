@@ -11,12 +11,15 @@
 [ext_resource type="Texture2D" uid="uid://bowklt4otdwqs" path="res://Scenes/Main/images/hamburguer.png" id="9_561kl"]
 
 [node name="Main" type="Control" unique_id=1200556173]
+clip_contents = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_q8jyx")
 
 [node name="BackGroundColor" type="ColorRect" parent="." unique_id=363418273]
