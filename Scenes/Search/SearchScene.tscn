@@ -19,15 +19,25 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PrincipalLayout" unique_id=790034498]
+[node name="HBoxContainer" type="HBoxContainer" parent="PrincipalLayout" unique_id=723425552]
 layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PrincipalLayout/HBoxContainer" unique_id=790034498]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 20
+theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 20
 
-[node name="LineEdit" type="LineEdit" parent="PrincipalLayout/MarginContainer" unique_id=2072762319]
+[node name="LineEdit" type="LineEdit" parent="PrincipalLayout/HBoxContainer/MarginContainer" unique_id=2072762319]
 layout_mode = 2
 placeholder_text = "Search..."
+
+[node name="Button" type="Button" parent="PrincipalLayout/HBoxContainer" unique_id=1980264117]
+custom_minimum_size = Vector2(100, 10)
+layout_mode = 2
+toggle_mode = true
+text = "Filter"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="PrincipalLayout" unique_id=1056462115]
 layout_mode = 2
@@ -38,3 +48,64 @@ layout_mode = 2
 theme_override_constants/separation = 20
 
 [node name="BookAPI" type="HTTPRequest" parent="." unique_id=848861124]
+
+[node name="FilterPanel" type="PanelContainer" parent="." unique_id=508610621]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.26700002
+anchor_right = 1.0
+anchor_bottom = 0.26700002
+offset_left = -253.0
+offset_top = -81.01601
+offset_bottom = 39.983994
+grow_horizontal = 0
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FilterPanel" unique_id=247308084]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="FilterPanel/VBoxContainer" unique_id=2123978222]
+layout_mode = 2
+
+[node name="Categories" type="Label" parent="FilterPanel/VBoxContainer/HBoxContainer" unique_id=1111959791]
+layout_mode = 2
+text = "Categories:"
+
+[node name="CheckGames" type="CheckBox" parent="FilterPanel/VBoxContainer/HBoxContainer" unique_id=645776428]
+layout_mode = 2
+button_pressed = true
+text = "Games"
+
+[node name="CheckBooks" type="CheckBox" parent="FilterPanel/VBoxContainer/HBoxContainer" unique_id=497517621]
+layout_mode = 2
+button_pressed = true
+text = "Books"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="FilterPanel/VBoxContainer" unique_id=2080494490]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="CheckSeries" type="CheckBox" parent="FilterPanel/VBoxContainer/HBoxContainer2" unique_id=1238115857]
+layout_mode = 2
+button_pressed = true
+text = "Series"
+
+[node name="CheckMovies" type="CheckBox" parent="FilterPanel/VBoxContainer/HBoxContainer2" unique_id=249091056]
+layout_mode = 2
+button_pressed = true
+text = "Movies"
+
+[node name="HSeparator" type="HSeparator" parent="FilterPanel/VBoxContainer" unique_id=1967430709]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="FilterPanel/VBoxContainer" unique_id=1218185698]
+layout_mode = 2
+text = "Minimun Rating: 0"
+
+[node name="HSlider" type="HSlider" parent="FilterPanel/VBoxContainer" unique_id=2026865965]
+layout_mode = 2
+max_value = 5.0
+step = 0.5

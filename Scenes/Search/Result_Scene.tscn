@@ -13,11 +13,10 @@ script = ExtResource("1_o7qp3")
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer" unique_id=1388611640]
-custom_minimum_size = Vector2(100, 125)
+custom_minimum_size = Vector2(125, 150)
 layout_mode = 2
 texture = ExtResource("2_o7qp3")
 expand_mode = 1
-stretch_mode = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=639566676]
 layout_mode = 2
