@@ -33,21 +33,30 @@ func _on_hamburguesa_pressed():
 	else:
 		abrir_menu()
 
+@onready var menu_spacer = $ViewContainer/MenuSpacer # El nuevo nodo invisible
+
 func cerrar_menu():
 	var tween = create_tween().set_parallel(true)
-	# Animamos el ancho a 0. El ContentArea se estirará solo por sus Size Flags.
-	tween.tween_property(menu_sidebar, "custom_minimum_size:x", 0, tiempo_animacion).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	# Forzamos al contenedor a actualizar el tamaño de sus hijos cada frame de la animación
+	# 1. Cerramos el menú (lo que ya tenías)
+	tween.tween_property(menu_sidebar, "custom_minimum_size:x", 0, tiempo_animacion).set_trans(Tween.TRANS_SINE)
+	
+	# 2. En lugar de offset, abrimos el "espacio de seguridad" para el botón
+	# Pon el ancho que necesites para que no choque (ej: 80)
+	tween.tween_property(menu_spacer, "custom_minimum_size:x", 80, tiempo_animacion).set_trans(Tween.TRANS_SINE)
+	
 	tween.tween_callback(func(): view_container.queue_sort())
 	menu_abierto = false
 
 func abrir_menu():
 	var tween = create_tween().set_parallel(true)
-	# Volvemos al ancho original
-	tween.tween_property(menu_sidebar, "custom_minimum_size:x", ancho_menu, tiempo_animacion).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	# 1. Abrimos el menú
+	tween.tween_property(menu_sidebar, "custom_minimum_size:x", ancho_menu, tiempo_animacion).set_trans(Tween.TRANS_SINE)
+	
+	# 2. Cerramos el espacio de seguridad (ya no hace falta porque está el menú)
+	tween.tween_property(menu_spacer, "custom_minimum_size:x", 0, tiempo_animacion).set_trans(Tween.TRANS_SINE)
+	
 	tween.tween_callback(func(): view_container.queue_sort())
 	menu_abierto = true
-
 # --- NAVEGACIÓN ---
 
 func _on_search_pressed():

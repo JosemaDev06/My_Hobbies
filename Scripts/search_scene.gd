@@ -1,6 +1,6 @@
 extends Control
 
-@onready var barra_busqueda = $PrincipalLayout/LineEdit
+@onready var barra_busqueda = $PrincipalLayout/MarginContainer/LineEdit
 @onready var contenedor_lista = $PrincipalLayout/ScrollContainer/Results
 @onready var api_libros = $BookAPI 
 
@@ -70,10 +70,9 @@ func iniciar_busqueda(texto_usuario):
 		var url_pelis = "https://api.themoviedb.org/3/search/movie?api_key=" + TMDB_API_KEY + "&query=" + texto_url + "&language=es-ES"
 		api_pelis.request(url_pelis)
 	else:
-		# Si no hay clave, reducimos el contador para no esperar eternamente
 		apis_pendientes -= 1
 
-# --- RECOPILADORES ---
+# --- RECOPILADORES CON RATING ---
 
 func recopilar_libros(result, code, headers, body):
 	if code == 200:
@@ -85,10 +84,17 @@ func recopilar_libros(result, code, headers, body):
 				if count >= MAX_RESULTADOS: break
 				var titulo = item.get("title", "Sin título")
 				var autor = item.get("author_name", ["Desconocido"])[0]
+				
+				# Rating de libros (A veces no viene, ponemos 0 por defecto)
+				var rating = item.get("ratings_average", 0)
+				if rating == null: rating = 0
+				
 				var cover_id = item.get("cover_i", 0)
 				var img = ""
 				if cover_id != 0: img = "http://covers.openlibrary.org/b/id/" + str(int(cover_id)) + "-M.jpg"
-				agregar_resultado(titulo, "Libro - " + autor, img)
+				
+				# Pasamos el rating redondeado a entero
+				agregar_resultado(titulo, "Libro - " + autor, float(rating), img)
 				count += 1
 	chequear_fin_peticion()
 
@@ -99,9 +105,14 @@ func recopilar_juegos(result, code, headers, body):
 			var lista = json.get("results", [])
 			for item in lista:
 				var titulo = item.get("name", "Juego")
+				
+				# Rating de Juegos (Viene sobre 5, perfecto)
+				var rating = item.get("rating", 0)
+				
 				var img = item.get("background_image", "")
 				if img == null: img = ""
-				agregar_resultado(titulo, "Videojuego", img)
+				
+				agregar_resultado(titulo, "Videojuego", float(rating), img)
 	chequear_fin_peticion()
 
 func recopilar_series(result, code, headers, body):
@@ -113,11 +124,19 @@ func recopilar_series(result, code, headers, body):
 				if count >= MAX_RESULTADOS: break
 				var show = item.get("show", {})
 				var titulo = show.get("name", "Serie TV")
+				
+				# Rating de Series (Viene sobre 10, dividimos entre 2)
+				var rating_obj = show.get("rating", {})
+				var score = rating_obj.get("average", 0)
+				if score == null: score = 0
+				var rating_final = score / 2
+				
 				var imagenes = show.get("image")
 				var img = ""
 				if imagenes != null and typeof(imagenes) == TYPE_DICTIONARY:
 					img = imagenes.get("medium", "")
-				agregar_resultado(titulo, "Serie TV", img)
+					
+				agregar_resultado(titulo, "Serie TV", float(rating_final), img)
 				count += 1
 	chequear_fin_peticion()
 
@@ -132,19 +151,27 @@ func recopilar_pelis(result, code, headers, body):
 				var titulo = item.get("title", "Película")
 				var fecha = item.get("release_date", "")
 				if fecha.length() >= 4: titulo += " (" + fecha.substr(0,4) + ")"
+				
+				# Rating de Pelis (Viene sobre 10, dividimos entre 2)
+				var score = item.get("vote_average", 0)
+				var rating_final = score / 2
+				
 				var poster = item.get("poster_path")
 				var img = ""
 				if poster != null: img = "https://image.tmdb.org/t/p/w500" + poster
-				agregar_resultado(titulo, "Película", img)
+				
+				agregar_resultado(titulo, "Película", float(rating_final), img)
 				count += 1
 	chequear_fin_peticion()
 
 # --- LÓGICA CENTRAL ---
 
-func agregar_resultado(titulo, categoria, imagen):
+# HEMOS AÑADIDO 'rating' AQUI
+func agregar_resultado(titulo, categoria, rating, imagen):
 	resultados_combinados.append({
 		"titulo": titulo,
 		"categoria": categoria,
+		"rating": rating, # Guardamos la nota
 		"imagen": imagen
 	})
 
@@ -158,7 +185,8 @@ func mostrar_resultados_ordenados():
 	resultados_combinados.sort_custom(ordenar_por_similitud)
 	
 	for dato in resultados_combinados:
-		crear_ficha(dato["titulo"], dato["categoria"], dato["imagen"])
+		# Pasamos los 4 datos a la función de crear
+		crear_ficha(dato["titulo"], dato["categoria"], dato["rating"], dato["imagen"])
 
 func ordenar_por_similitud(a, b):
 	var sim_a = a["titulo"].to_lower().similarity(texto_buscado_actual)
@@ -169,7 +197,9 @@ func ordenar_por_similitud(a, b):
 	
 	return sim_a > sim_b
 
-func crear_ficha(titulo, categoria, url_imagen):
+# HEMOS AÑADIDO 'rating' AQUI TAMBIEN
+func crear_ficha(titulo, categoria, rating, url_imagen):
 	var nueva_ficha = escena_resultado.instantiate()
 	contenedor_lista.add_child(nueva_ficha)
-	nueva_ficha.configurar_datos(titulo, categoria, url_imagen)
+	# Y AQUI ES DONDE DABA EL ERROR ANTES:
+	nueva_ficha.configurar_datos(titulo, categoria, rating, url_imagen)

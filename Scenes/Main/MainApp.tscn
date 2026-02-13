@@ -97,6 +97,9 @@ theme_override_constants/icon_max_width = 30
 text = "Profile"
 icon = ExtResource("8_iu3bl")
 
+[node name="MenuSpacer" type="Control" parent="ViewContainer" unique_id=507063341]
+layout_mode = 2
+
 [node name="ContentArea" type="Control" parent="ViewContainer" unique_id=416845705]
 layout_mode = 2
 size_flags_horizontal = 3
