@@ -1,31 +1,36 @@
 extends Control
 
 # --- REFERENCIAS ---
-# Asegúrate de que las rutas a los nodos sean correctas según tu árbol
 @onready var view_container = $ViewContainer
 @onready var menu_sidebar = $ViewContainer/SideMenu
 @onready var content_area = $ViewContainer/ContentArea
 @onready var btn_hamburguesa = $Menu
+@onready var menu_spacer = $ViewContainer/MenuSpacer
 
 # --- CONFIGURACIÓN ---
 var menu_abierto = true
-var ancho_menu = 300.0  # El ancho que tiene tu zona gris
+var ancho_menu = 300.0
 var tiempo_animacion = 0.3
 
-# Precarga de escenas para evitar tirones
+# --- PRECARGA DE ESCENAS ---
 var escena_search = preload("res://Scenes/Search/SearchScene.tscn")
+var escena_profile = preload("res://Scenes/Profile/ProfileScene.tscn")
 
 func _ready():
-	# Forzamos el ancho inicial y activamos el recorte para que no se desborde al cerrar
+	# Configuración inicial del menú
 	menu_sidebar.custom_minimum_size.x = ancho_menu
 	menu_sidebar.clip_contents = true 
-	
-	
-	
-	# Si el botón de búsqueda está dentro del SideMenu, lo conectamos:
-	var btn_search = menu_sidebar.find_child("Sear") # Ajusta el nombre si es distinto
+
+	# Conectar botón búsqueda
+	var btn_search = menu_sidebar.find_child("Sear")
 	if btn_search:
 		btn_search.pressed.connect(_on_search_pressed)
+
+	# Conectar botón profile
+	var btn_profile = menu_sidebar.find_child("Profile")
+# -------------------------
+# MENÚ LATERAL
+# -------------------------
 
 func _on_hamburguesa_pressed():
 	if menu_abierto:
@@ -33,41 +38,75 @@ func _on_hamburguesa_pressed():
 	else:
 		abrir_menu()
 
-@onready var menu_spacer = $ViewContainer/MenuSpacer # El nuevo nodo invisible
-
 func cerrar_menu():
 	var tween = create_tween().set_parallel(true)
-	# 1. Cerramos el menú (lo que ya tenías)
-	tween.tween_property(menu_sidebar, "custom_minimum_size:x", 0, tiempo_animacion).set_trans(Tween.TRANS_SINE)
 	
-	# 2. En lugar de offset, abrimos el "espacio de seguridad" para el botón
-	# Pon el ancho que necesites para que no choque (ej: 80)
-	tween.tween_property(menu_spacer, "custom_minimum_size:x", 80, tiempo_animacion).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(
+		menu_sidebar,
+		"custom_minimum_size:x",
+		0,
+		tiempo_animacion
+	).set_trans(Tween.TRANS_SINE)
+	
+	tween.tween_property(
+		menu_spacer,
+		"custom_minimum_size:x",
+		80,
+		tiempo_animacion
+	).set_trans(Tween.TRANS_SINE)
 	
 	tween.tween_callback(func(): view_container.queue_sort())
 	menu_abierto = false
 
 func abrir_menu():
 	var tween = create_tween().set_parallel(true)
-	# 1. Abrimos el menú
-	tween.tween_property(menu_sidebar, "custom_minimum_size:x", ancho_menu, tiempo_animacion).set_trans(Tween.TRANS_SINE)
 	
-	# 2. Cerramos el espacio de seguridad (ya no hace falta porque está el menú)
-	tween.tween_property(menu_spacer, "custom_minimum_size:x", 0, tiempo_animacion).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(
+		menu_sidebar,
+		"custom_minimum_size:x",
+		ancho_menu,
+		tiempo_animacion
+	).set_trans(Tween.TRANS_SINE)
+	
+	tween.tween_property(
+		menu_spacer,
+		"custom_minimum_size:x",
+		0,
+		tiempo_animacion
+	).set_trans(Tween.TRANS_SINE)
 	
 	tween.tween_callback(func(): view_container.queue_sort())
 	menu_abierto = true
-# --- NAVEGACIÓN ---
 
-func _on_search_pressed():
-	# 1. Limpiar el ContentArea (cuadro blanco)
+
+# -------------------------
+# NAVEGACIÓN
+# -------------------------
+
+func limpiar_content_area():
 	for hijo in content_area.get_children():
 		hijo.queue_free()
+
+func cargar_escena(escena):
+	limpiar_content_area()
 	
-	# 2. Instanciar la escena de búsqueda
-	var instancia = escena_search.instantiate()
+	var instancia = escena.instantiate()
 	content_area.add_child(instancia)
 	
-	# 3. Forzar a que ocupe todo el espacio del cuadro blanco
 	if instancia is Control:
-		instancia.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT, Control.PRESET_MODE_MINSIZE, 0)
+		instancia.set_anchors_and_offsets_preset(
+			Control.PRESET_FULL_RECT,
+			Control.PRESET_MODE_MINSIZE,
+			0
+		)
+
+	if menu_abierto:
+		cerrar_menu()
+
+
+func _on_search_pressed():
+	cargar_escena(escena_search)
+
+
+func _on_profile_pressed():
+	cargar_escena(escena_profile)

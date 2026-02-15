@@ -117,4 +117,5 @@ theme_override_constants/icon_max_width = 40
 icon = ExtResource("9_561kl")
 
 [connection signal="pressed" from="ViewContainer/SideMenu/MenuColor/ButtonContainer/VBoxContainer/Search" to="." method="_on_search_pressed"]
+[connection signal="pressed" from="ViewContainer/SideMenu/MenuColor/ButtonContainer/VBoxContainer/Profile" to="." method="_on_profile_pressed"]
 [connection signal="pressed" from="Menu" to="." method="_on_hamburguesa_pressed"]

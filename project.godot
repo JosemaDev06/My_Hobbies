@@ -11,9 +11,20 @@ config_version=5
 [application]
 
 config/name="My_Hobbies"
-run/main_scene="uid://c271w4gngd6d"
+run/main_scene="uid://bgnm8jhgguf4x"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+AuthManager="*uid://ceifwfuhlda1o"
+DataManager="*uid://dwtdnk63hxe4n"
+Global="*uid://cpf8fbovngeg"
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="ignore"
 
 [file_customization]
 
